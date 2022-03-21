@@ -11,7 +11,7 @@ class Weather{
         return{weather};
     }
     async getPicture(pic){
-        const pictureResponse = await fetch(`http://openweathermap.org/img/wn/${pic}d@4x.png`)
+        const pictureResponse = await fetch(`http://openweathermap.org/img/wn/${pic}@4x.png`)
         console.log(pictureResponse)
         
         return pictureResponse;

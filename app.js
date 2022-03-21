@@ -1,6 +1,6 @@
 const coordinates = new Coordinates();
 const weather = new Weather();
-const ui = new UI();
+
 var city = 'istanbul';
 
 const search = document.getElementById('search');
@@ -10,16 +10,18 @@ search.addEventListener('keypress', (event) => {
         let text = event.target.value;
         if (text != '') {
             coordinates.getCoordinates(text).then(response => {
+                city =response.coordinates[0].name ;
                 if (response.coordinates[0].name != '') {
                     var latitude = response.coordinates[0].lat
                     var longitude = response.coordinates[0].lon
                     weather.getWeather(latitude, longitude).then(response => {
-                   
+                        const ui = new UI(city);
+                        console.log(ui)
                         ui.showWeather(response.weather)
-
+                        ui.showWind();
                         weatherCondition(response.weather.weather[0].description)
             
-                        weather.getPicture(pic).then(response=>{
+                        weather.getPicture(response.weather.weather[0].icon).then(response=>{
                             ui.showPicture(response.url)
                         })
                     })
