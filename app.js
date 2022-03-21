@@ -1,6 +1,6 @@
 const coordinates = new Coordinates();
 const weather = new Weather();
-
+const ui = new UI();
 var city = 'istanbul';
 
 const search = document.getElementById('search');
@@ -14,11 +14,14 @@ search.addEventListener('keypress', (event) => {
                     var latitude = response.coordinates[0].lat
                     var longitude = response.coordinates[0].lon
                     weather.getWeather(latitude, longitude).then(response => {
-                        console.log(response.weather.weather[0].description)
-                        console.log(response.weather)
+                   
+                        ui.showWeather(response.weather)
 
                         weatherCondition(response.weather.weather[0].description)
-                        console.log(pic)
+            
+                        weather.getPicture(pic).then(response=>{
+                            ui.showPicture(response.url)
+                        })
                     })
                 }
             })
@@ -41,13 +44,14 @@ coordinates.getCoordinates(city)
     })
 
 function weatherCondition(description){
+    pic='03'
     if(description == 'clear sky'){
         pic = '01';
     }
-    if(description == '	few clouds'){
+    if(description == 'few clouds'){
         pic = '02';
     }
-    if(description == '	scattered clouds'){
+    if(description == 'scattered clouds'){
         pic = '03';
     }
     if(description == 'broken clouds'){
@@ -56,10 +60,10 @@ function weatherCondition(description){
     if(description == 'shower rain'){
         pic = '09';
     }
-    if(description == '	rain'){
+    if(description == 'rain'){
         pic = '10';
     }
-    if(description == '	thunderstorm'){
+    if(description == 'thunderstorm'){
         pic = '11';
     }
     if(description == 'snow'){
